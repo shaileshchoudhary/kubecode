@@ -2,7 +2,7 @@
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: httpdweb-pv-claim
+  name: php-pv-claim
   labels:
     app: httpd
 spec:
@@ -10,7 +10,7 @@ spec:
     - ReadWriteOnce
   resources:
     requests:
-      storage: 1Gi
+      storage: 2Gi
 ---
 
 apiVersion: v1
@@ -55,9 +55,9 @@ spec:
         - containerPort: 80
           name: apache-php
         volumeMounts:
-        - name: httpd-web-persistent-storage
+        - name: persistent-storage
           mountPath: /var/www/html
       volumes:
-      - name: httpd-web-persistent-storage
+      - name: persistent-storage
         persistentVolumeClaim:
-          claimName: httpdweb-pv-claim
+          claimName: php-pv-claim
