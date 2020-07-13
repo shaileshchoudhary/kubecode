@@ -2,7 +2,7 @@
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: httpdweb1-pv-claim
+  name: httpdweb-pv-claim
   labels:
     app: httpd
 spec:
@@ -32,7 +32,7 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: httpd-web
+  name: apache-php
   labels:
     app: httpd
 spec:
@@ -50,14 +50,14 @@ spec:
     spec:
       containers:
       - image: vimal13/apache-webserver-php
-        name: httpd-web
+        name: apache-php
         ports:
         - containerPort: 80
-          name: httpd-web
+          name: apache-php
         volumeMounts:
         - name: httpd-web-persistent-storage
           mountPath: /var/www/html
       volumes:
       - name: httpd-web-persistent-storage
         persistentVolumeClaim:
-          claimName: httpdweb1-pv-claim
+          claimName: httpdweb-pv-claim
